@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vboxPane" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="generator.ChartControler">
+   <children>
+      <ScatterChart fx:id="randomChart" prefHeight="400.0" prefWidth="592.0" title="Generated data" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <xAxis>
+          <NumberAxis label="X" side="BOTTOM" upperBound="1.0" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="Y" side="LEFT" upperBound="2.0" />
+        </yAxis>
+      </ScatterChart>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5">
+         <children>
+          <Button fx:id="startButton" mnemonicParsing="false" onAction="#startGenerator" text="Generate" />
+            <Button mnemonicParsing="false" onAction="#stopGenerator" prefHeight="27.0" prefWidth="69.0" text="Stop" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
