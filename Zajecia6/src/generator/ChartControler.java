@@ -44,6 +44,9 @@ public class ChartControler {
         series = new XYChart.Series();
         series1 = new XYChart.Series();
 
+        series.setName("Gen 0: 0");
+        series1.setName("Gen 1: 1");
+
         randomChart.setAnimated(false);
         randomChart.setLegendVisible(true);
 
@@ -80,6 +83,9 @@ public class ChartControler {
     public void generateData() {
         XYChart.Series series = new XYChart.Series();
         XYChart.Series series1 = new XYChart.Series();
+
+        series.setName("Generator 1");
+        series1.setName("Generator 2");
 
         Data data = new Data(100, 0, 1);
         Data data1 = new Data(100,0,1);
@@ -139,9 +145,8 @@ public class ChartControler {
                     randomChart.getData().add(series);
                     randomChart.getData().add(series1);
 
-                    series.setName("gen 1:"+df2.format(x2_gen1_number));
-                    series1.setName("gen 2:"+df2.format(x2_gen2_number));
-
+                    //series.setName("Gen 1:"+df2.format(x2_gen1_number));
+                    //series1.setName("Gen 2:"+df2.format(x2_gen2_number));
 
                 }
             });
