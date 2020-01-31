@@ -4,11 +4,54 @@
 package com.equation.example;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class App extends Application {
+
+    ReentrantLock lock = new ReentrantLock();
+    Condition condition = lock.newCondition();
+
+    boolean working = true;
+    boolean programWorking = true;
+
+    Thread animation = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (programWorking) {
+
+                try {
+                    lock.lock();
+                    if (!working)
+                        condition.await();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    lock.unlock();
+                }
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        compute();
+
+                    }
+                });
+
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    });
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -17,5 +60,25 @@ public class App extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        animation.start();
+    }
+
+    private void compute(){
+        System.out.println("Napis");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+
+        programWorking = false;
+
+        lock.lock();
+        condition.signal();
+        lock.unlock();
+
+        animation.join();
+
     }
 }
