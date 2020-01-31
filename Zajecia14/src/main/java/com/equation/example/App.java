@@ -40,7 +40,6 @@ public class App extends Application {
                     @Override
                     public void run() {
                         compute();
-
                     }
                 });
 
@@ -53,6 +52,17 @@ public class App extends Application {
         }
     });
 
+    private void switchState() {
+        if (working) {
+            working = !working;
+        } else {
+            lock.lock();
+            working = true;
+            condition.signal();
+            lock.unlock();
+        }
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Group group = new Group();
@@ -60,6 +70,11 @@ public class App extends Application {
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        scene.setOnMouseClicked(event -> {
+
+            switchState();
+        });
 
         animation.start();
     }
